@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevRank - Batalha dos Frameworks Front-End</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* -- base tokens: tema "editor de código" -- */
+            --bg: #0b0d13;
+            --bg-grid-line: rgba(255,255,255,0.028);
+            --panel: #151824;
+            --panel-alt: #12141d;
+            --hairline: #262b3a;
+            --hairline-soft: #1d2130;
+            --text-primary: #edf0f6;
+            --text-secondary: #8991a8;
+            --text-muted: #5c6377;
+            --ui-accent: #ffb454;
+            --ui-accent-dim: rgba(255, 180, 84, 0.14);
+
+            /* -- cores de marca: uma por framework, usadas nos próprios cards -- */
+            --angular: #e23554;
+            --react: #58c4dd;
+            --vue: #3fb883;
+
+            --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+            --font-sans: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(var(--bg-grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--bg-grid-line) 1px, transparent 1px);
+            background-size: 42px 42px;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            padding-bottom: 84px;
+        }
+
+        /* ================= HEADER ================= */
+        .site-header {
+            background-color: var(--panel-alt);
+            border-bottom: 1px solid var(--hairline);
+            padding: 1.25rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+        }
+
+        .site-logo { transition: transform 0.3s ease; flex-shrink: 0; }
+        .site-logo:hover { transform: rotate(15deg); }
+
+        .site-title {
+            font-family: var(--font-mono);
+            font-size: 1.55rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .site-title .subtitle {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-top: 0.15rem;
+        }
+        .site-title .subtitle::before { content: "// "; color: var(--ui-accent); }
+
+        /* ================= LAYOUT ================= */
+        .main-content { max-width: 1200px; margin: 2.5rem auto; padding: 0 1.25rem; }
+
+        .intro-section {
+            background: var(--panel);
+            padding: 0;
+            border-radius: 10px;
+            margin-bottom: 2.75rem;
+            border: 1px solid var(--hairline);
+            overflow: hidden;
+        }
+
+        .console-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1rem;
+            background: var(--panel-alt);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .console-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--hairline); }
+        .console-dot.d1 { background: #4a4f61; }
+        .console-dot.d2 { background: #4a4f61; }
+        .console-dot.d3 { background: #4a4f61; }
+        .console-path {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-left: 0.4rem;
+            letter-spacing: 0.02em;
+        }
+
+        .intro-body { padding: 1.75rem 2rem 2rem; }
+        .intro-body h2 {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.6rem;
+        }
+        .intro-body h2::before { content: "$ "; color: var(--ui-accent); }
+        .intro-body > p { color: var(--text-secondary); max-width: 62ch; }
+
+        .controls-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: var(--panel-alt);
+            border: 1px solid var(--hairline);
+            padding: 0.7rem 1.25rem;
+            border-radius: 7px;
+            margin-top: 1.35rem;
+        }
+        .controls-container label {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .controls-container .material-icons { font-size: 1.1rem; color: var(--ui-accent); }
+
+        .sort-dropdown {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            border: 1px solid var(--hairline);
+            padding: 0.45rem 0.85rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .sort-dropdown:focus-visible,
+        .item-link:focus-visible {
+            outline: 2px solid var(--ui-accent);
+            outline-offset: 2px;
+        }
+
+        .explanation {
+            display: none;
+            align-items: center;
+            gap: 0.55rem;
+            color: var(--text-secondary);
+            background-color: var(--panel-alt);
+            border: 1px solid var(--hairline-soft);
+            padding: 0.7rem 0.9rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+        }
+        .explanation .material-icons { font-size: 1.05rem; color: var(--ui-accent); }
+        body[data-sort="views"] .exp-views { display: flex; }
+        body[data-sort="date"] .exp-date { display: flex; }
+        body[data-sort="alpha"] .exp-alpha { display: flex; }
+
+        /* ================= RANKING ================= */
+        .ranking-container { counter-reset: ranking-counter; display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .ranking-item {
+            counter-increment: ranking-counter;
+            background-color: var(--panel);
+            border-radius: 10px;
+            border: 1px solid var(--hairline);
+            border-left: 3px solid var(--card-accent, var(--hairline));
+            overflow: hidden;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .ranking-item:hover { transform: translateY(-2px); }
+
+        /* mini barra de "janela de editor", ecoando o estilo das imagens */
+        .item-topbar {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.55rem 1.1rem;
+            background: var(--panel-alt);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .item-topbar .dots { display: flex; gap: 0.4rem; }
+        .item-topbar .dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--hairline); }
+        .item-topbar .filename {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+        .item-topbar .rank-tag {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--card-accent, var(--text-muted));
+            letter-spacing: 0.03em;
+        }
+        .item-topbar .rank-tag::before { content: "rank_" counter(ranking-counter, decimal-leading-zero); }
+
+        .ranking-item-grid {
+            padding: 1.4rem 1.5rem 1.5rem;
+            display: grid;
+            grid-template-columns: auto 260px 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .rank-badge { width: 54px; flex-shrink: 0; }
+        .rank-badge::before {
+            content: "#" counter(ranking-counter);
+            font-family: var(--font-mono);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--card-accent, #333a4d);
+            opacity: 0.85;
+            display: block;
+        }
+
+        /* cores por framework — persistem independente da ordenação */
+        .ranking-item[data-title="Angular"] { --card-accent: var(--angular); }
+        .ranking-item[data-title="React"]   { --card-accent: var(--react); }
+        .ranking-item[data-title="VueJS"]   { --card-accent: var(--vue); }
+
+        .ranking-item[data-title="Angular"] .item-media img,
+        .ranking-item[data-title="Angular"] .item-media svg { box-shadow: 0 0 0 2px var(--angular); }
+        .ranking-item[data-title="React"] .item-media img,
+        .ranking-item[data-title="React"] .item-media svg   { box-shadow: 0 0 0 2px var(--react); }
+        .ranking-item[data-title="VueJS"] .item-media img,
+        .ranking-item[data-title="VueJS"] .item-media svg    { box-shadow: 0 0 0 2px var(--vue); }
+
+        .item-media img,
+        .item-media svg {
+            width: 100%;
+            height: 175px;
+            border-radius: 7px;
+            display: block;
+            object-fit: cover;
+        }
+        .item-media svg:hover { filter: brightness(1.12); }
+        .item-media figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .item-info h3 {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-link:link {
+            color: var(--card-accent, var(--ui-accent));
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--card-accent, var(--ui-accent));
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.2s;
+            margin-top: 0.4rem;
+        }
+        .item-link:visited { color: var(--card-accent, var(--ui-accent)); }
+        .item-link:hover { color: var(--bg); background-color: var(--card-accent, var(--ui-accent)); }
+        .item-link:active { transform: scale(0.98); }
+
+        /* ================= FOOTER ================= */
+        .site-footer {
+            background-color: var(--panel-alt);
+            border-top: 1px solid var(--hairline);
+            padding: 0.9rem;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .site-footer .prompt { color: var(--ui-accent); }
+
+        @media (max-width: 850px) {
+            .ranking-item-grid { grid-template-columns: auto 1fr; }
+            .item-media { grid-column: 1 / -1; max-width: 400px; margin: 0 auto; }
+            .item-info { grid-column: 1 / -1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ranking-item, .site-logo { transition: none; }
+        }
+
+        /* ================= CHUVA DE CARACTERES (fundo) ================= */
+        #matrix-rain {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .site-header, .main-content, .site-footer {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body data-sort="views">
+
+    <canvas id="matrix-rain" aria-hidden="true"></canvas>
+
+    <header class="site-header">
+        <div class="header-container">
+            <svg class="site-logo" width="42" height="42" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="#ffb454" stroke-width="6"/>
+                <polyline points="25,40 50,20 75,40" fill="none" stroke="#ffb454" stroke-width="6"/>
+                <polyline points="25,60 50,80 75,60" fill="none" stroke="#ffb454" stroke-width="6"/>
+            </svg>
+            <h1 class="site-title">DevRank<span class="subtitle">Batalha dos Frameworks</span></h1>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="intro-section">
+            <div class="console-bar">
+                <span class="console-dot d1"></span>
+                <span class="console-dot d2"></span>
+                <span class="console-dot d3"></span>
+                <span class="console-path">~/devrank/frameworks.log</span>
+            </div>
+            <div class="intro-body">
+                <h2>rank --frameworks front-end</h2>
+                <p>Seja bem-vindo ao ecossistema de frameworks que moldam a web moderna. Avalie os frameworks e utilize os filtros abaixo para reorganizar o ranking!</p>
+
+                <div class="controls-container">
+                    <label for="sort-criteria"><span class="material-icons">sort</span> Ordenar ranking por:</label>
+                    <select id="sort-criteria" class="sort-dropdown">
+                        <option value="views" selected>Popularidade (Acessos Mensais)</option>
+                        <option value="date">Data de Lançamento</option>
+                        <option value="alpha">Ordem Alfabética (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section id="ranking-list" class="ranking-container">
+
+            <!-- Item 1: Angular -->
+            <article class="ranking-item" data-title="Angular" data-views="9000" data-date="2016-09-14">
+                <div class="item-topbar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span class="filename">angular.config.ts</span>
+                    <span class="rank-tag"></span>
+                </div>
+                <div class="ranking-item-grid">
+                    <span class="rank-badge"></span>
+                    <figure class="item-media">
+                        <picture>
+<svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Emblema cyberpunk do Angular estilo Matrix">
+  <defs>
+    <linearGradient id="bg-e23554" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05070c"/>
+      <stop offset="100%" stop-color="#0b0d13"/>
+    </linearGradient>
+    <filter id="glow-e23554" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="clip-e23554"><rect x="0" y="0" width="600" height="260" rx="10"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip-e23554)">
+    <rect x="0" y="0" width="600" height="260" fill="url(#bg-e23554)"/>
+    <rect x="0" y="0" width="600" height="260" fill="none" stroke="#e23554" stroke-opacity="0.25" stroke-width="1"/>
+    <g opacity="0.9"><text x="21" y="-9" class="rain" fill="#e23554" opacity="0.12" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="21" dy="16">0</tspan><tspan x="21" dy="16">:</tspan><tspan x="21" dy="16"><</tspan><tspan x="21" dy="16">1</tspan><tspan x="21" dy="16">*</tspan><tspan x="21" dy="16">:</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.9s" repeatCount="indefinite"/></text>
+<text x="64" y="-1" class="rain" fill="#e23554" opacity="0.08" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="64" dy="16">\</tspan><tspan x="64" dy="16">.</tspan><tspan x="64" dy="16">0</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">></tspan><tspan x="64" dy="16">#</tspan><tspan x="64" dy="16"><</tspan><tspan x="64" dy="16">></tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.8s" repeatCount="indefinite"/></text>
+<text x="107" y="-32" class="rain" fill="#e23554" opacity="0.12" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="107" dy="16">0</tspan><tspan x="107" dy="16">/</tspan><tspan x="107" dy="16">$</tspan><tspan x="107" dy="16">.</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.4s" repeatCount="indefinite"/></text>
+<text x="149" y="9" class="rain" fill="#e23554" opacity="0.2" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="149" dy="16">0</tspan><tspan x="149" dy="16">+</tspan><tspan x="149" dy="16">1</tspan><tspan x="149" dy="16">[</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="6.1s" repeatCount="indefinite"/></text>
+<text x="192" y="-2" class="rain" fill="#e23554" opacity="0.11" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="192" dy="16">.</tspan><tspan x="192" dy="16">1</tspan><tspan x="192" dy="16">%</tspan><tspan x="192" dy="16">}</tspan><tspan x="192" dy="16">$</tspan><tspan x="192" dy="16">;</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="3.8s" repeatCount="indefinite"/></text>
+<text x="235" y="-33" class="rain" fill="#e23554" opacity="0.21" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="235" dy="16">;</tspan><tspan x="235" dy="16">0</tspan><tspan x="235" dy="16">0</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="3.5s" repeatCount="indefinite"/></text>
+<text x="278" y="3" class="rain" fill="#e23554" opacity="0.17" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="278" dy="16">1</tspan><tspan x="278" dy="16">$</tspan><tspan x="278" dy="16">1</tspan><tspan x="278" dy="16">+</tspan><tspan x="278" dy="16">,</tspan><tspan x="278" dy="16">;</tspan><tspan x="278" dy="16">,</tspan><tspan x="278" dy="16">0</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.0s" repeatCount="indefinite"/></text>
+<text x="321" y="-8" class="rain" fill="#e23554" opacity="0.1" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="321" dy="16">#</tspan><tspan x="321" dy="16">1</tspan><tspan x="321" dy="16">[</tspan><tspan x="321" dy="16">0</tspan><tspan x="321" dy="16">1</tspan><tspan x="321" dy="16">0</tspan><tspan x="321" dy="16">}</tspan><tspan x="321" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.3s" repeatCount="indefinite"/></text>
+<text x="364" y="-1" class="rain" fill="#e23554" opacity="0.15" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="364" dy="16">]</tspan><tspan x="364" dy="16">%</tspan><tspan x="364" dy="16">}</tspan><tspan x="364" dy="16">.</tspan><tspan x="364" dy="16">=</tspan><tspan x="364" dy="16">1</tspan><tspan x="364" dy="16">[</tspan><tspan x="364" dy="16">;</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.0s" repeatCount="indefinite"/></text>
+<text x="407" y="-21" class="rain" fill="#e23554" opacity="0.13" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="407" dy="16">,</tspan><tspan x="407" dy="16">1</tspan><tspan x="407" dy="16">[</tspan><tspan x="407" dy="16">*</tspan><tspan x="407" dy="16">.</tspan><tspan x="407" dy="16">+</tspan><tspan x="407" dy="16">{</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="3.6s" repeatCount="indefinite"/></text>
+<text x="450" y="-3" class="rain" fill="#e23554" opacity="0.19" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="450" dy="16">></tspan><tspan x="450" dy="16">*</tspan><tspan x="450" dy="16">#</tspan><tspan x="450" dy="16">[</tspan><tspan x="450" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.6s" repeatCount="indefinite"/></text>
+<text x="492" y="-7" class="rain" fill="#e23554" opacity="0.13" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="492" dy="16">]</tspan><tspan x="492" dy="16">%</tspan><tspan x="492" dy="16">*</tspan><tspan x="492" dy="16">:</tspan><tspan x="492" dy="16">*</tspan><tspan x="492" dy="16">0</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="6.2s" repeatCount="indefinite"/></text>
+<text x="535" y="-21" class="rain" fill="#e23554" opacity="0.19" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="535" dy="16">+</tspan><tspan x="535" dy="16">}</tspan><tspan x="535" dy="16">1</tspan><tspan x="535" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="3.9s" repeatCount="indefinite"/></text>
+<text x="578" y="-3" class="rain" fill="#e23554" opacity="0.2" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="578" dy="16">}</tspan><tspan x="578" dy="16">[</tspan><tspan x="578" dy="16">0</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">0</tspan><tspan x="578" dy="16">[</tspan><tspan x="578" dy="16">\</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.0s" repeatCount="indefinite"/></text></g>
+    <rect x="0" y="0" width="600" height="260" fill="url(#bg-e23554)" opacity="0.15"/>
+    <g transform="translate(150,-20)">
+    <g filter="url(#glow-e23554)" stroke="#e23554" fill="none" stroke-width="2.5">
+      <path d="M150 40 L215 62 L215 118 C215 155 185 178 150 190 C115 178 85 155 85 118 L85 62 Z"/>
+      <path d="M150 78 L182 152 M150 78 L118 152 M128 132 L172 132" stroke-width="3"/>
+    </g>
+    <circle cx="150" cy="115" r="70" fill="none" stroke="#e23554" stroke-width="1" opacity="0.35"/>
+    </g>
+    <line x1="40" y1="215" x2="560" y2="215" stroke="#e23554" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="300" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace"
+          font-size="22" font-weight="700" fill="#e23554" filter="url(#glow-e23554)"
+          letter-spacing="4">ANGULAR</text>
+    <text x="300" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace"
+          font-size="10" fill="#e23554" opacity="0.55" letter-spacing="2">// TECHNO_BLADE.SYS</text>
+  </g>
+</svg>
+</picture>
+                        <figcaption></figcaption>
+                    </figure>
+                    <div class="item-info">
+                        <h3>Angular</h3>
+                        <p class="explanation exp-views"><span class="material-icons">trending_up</span> Retém robustos 9.000 acessos corporativos no TCC.</p>
+                        <p class="explanation exp-date"><span class="material-icons">calendar_today</span> Remodelado completamente em 14/09/2016.</p>
+                        <p class="explanation exp-alpha"><span class="material-icons">sort_by_alpha</span> Conquistou o topo da lista na letra A.</p>
+                        <a href="https://angular.dev" target="_blank" rel="noopener" class="item-link"><span class="material-icons">launch</span> Documentação</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 2: React -->
+            <article class="ranking-item" data-title="React" data-views="15000" data-date="2013-05-29">
+                <div class="item-topbar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span class="filename">App.jsx</span>
+                    <span class="rank-tag"></span>
+                </div>
+                <div class="ranking-item-grid">
+                    <span class="rank-badge"></span>
+                    <figure class="item-media">
+                        <picture>
+<svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Emblema cyberpunk do React estilo Matrix">
+  <defs>
+    <linearGradient id="bg-58c4dd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05070c"/>
+      <stop offset="100%" stop-color="#0b0d13"/>
+    </linearGradient>
+    <filter id="glow-58c4dd" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="clip-58c4dd"><rect x="0" y="0" width="600" height="260" rx="10"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip-58c4dd)">
+    <rect x="0" y="0" width="600" height="260" fill="url(#bg-58c4dd)"/>
+    <rect x="0" y="0" width="600" height="260" fill="none" stroke="#58c4dd" stroke-opacity="0.25" stroke-width="1"/>
+    <g opacity="0.9"><text x="21" y="-28" class="rain" fill="#58c4dd" opacity="0.11" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="21" dy="16">0</tspan><tspan x="21" dy="16">:</tspan><tspan x="21" dy="16">0</tspan><tspan x="21" dy="16">1</tspan><tspan x="21" dy="16">.</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.3s" repeatCount="indefinite"/></text>
+<text x="64" y="-27" class="rain" fill="#58c4dd" opacity="0.16" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">+</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">\</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.8s" repeatCount="indefinite"/></text>
+<text x="107" y="-13" class="rain" fill="#58c4dd" opacity="0.08" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="107" dy="16">*</tspan><tspan x="107" dy="16">[</tspan><tspan x="107" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.4s" repeatCount="indefinite"/></text>
+<text x="149" y="-23" class="rain" fill="#58c4dd" opacity="0.13" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="149" dy="16">}</tspan><tspan x="149" dy="16">></tspan><tspan x="149" dy="16">0</tspan><tspan x="149" dy="16">,</tspan><tspan x="149" dy="16">1</tspan><tspan x="149" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="6.0s" repeatCount="indefinite"/></text>
+<text x="192" y="-13" class="rain" fill="#58c4dd" opacity="0.16" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="192" dy="16">%</tspan><tspan x="192" dy="16">-</tspan><tspan x="192" dy="16">=</tspan><tspan x="192" dy="16">;</tspan><tspan x="192" dy="16">\</tspan><tspan x="192" dy="16">0</tspan><tspan x="192" dy="16">0</tspan><tspan x="192" dy="16">.</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.2s" repeatCount="indefinite"/></text>
+<text x="235" y="-15" class="rain" fill="#58c4dd" opacity="0.17" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="235" dy="16">,</tspan><tspan x="235" dy="16">0</tspan><tspan x="235" dy="16">+</tspan><tspan x="235" dy="16">$</tspan><tspan x="235" dy="16">,</tspan><tspan x="235" dy="16">0</tspan><tspan x="235" dy="16">,</tspan><tspan x="235" dy="16">;</tspan><tspan x="235" dy="16">#</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.0s" repeatCount="indefinite"/></text>
+<text x="278" y="-1" class="rain" fill="#58c4dd" opacity="0.13" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="278" dy="16">,</tspan><tspan x="278" dy="16">]</tspan><tspan x="278" dy="16">0</tspan><tspan x="278" dy="16">[</tspan><tspan x="278" dy="16">1</tspan><tspan x="278" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.9s" repeatCount="indefinite"/></text>
+<text x="321" y="-24" class="rain" fill="#58c4dd" opacity="0.11" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="321" dy="16">\</tspan><tspan x="321" dy="16">1</tspan><tspan x="321" dy="16">0</tspan><tspan x="321" dy="16"><</tspan><tspan x="321" dy="16">]</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.5s" repeatCount="indefinite"/></text>
+<text x="364" y="-7" class="rain" fill="#58c4dd" opacity="0.18" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="364" dy="16">=</tspan><tspan x="364" dy="16">;</tspan><tspan x="364" dy="16">></tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.5s" repeatCount="indefinite"/></text>
+<text x="407" y="-21" class="rain" fill="#58c4dd" opacity="0.1" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="407" dy="16">1</tspan><tspan x="407" dy="16">0</tspan><tspan x="407" dy="16">0</tspan><tspan x="407" dy="16">0</tspan><tspan x="407" dy="16"><</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="6.1s" repeatCount="indefinite"/></text>
+<text x="450" y="-37" class="rain" fill="#58c4dd" opacity="0.17" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="450" dy="16">-</tspan><tspan x="450" dy="16">{</tspan><tspan x="450" dy="16">0</tspan><tspan x="450" dy="16">;</tspan><tspan x="450" dy="16">%</tspan><tspan x="450" dy="16">]</tspan><tspan x="450" dy="16">+</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="6.3s" repeatCount="indefinite"/></text>
+<text x="492" y="-34" class="rain" fill="#58c4dd" opacity="0.15" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="492" dy="16">0</tspan><tspan x="492" dy="16">\</tspan><tspan x="492" dy="16">></tspan><tspan x="492" dy="16">[</tspan><tspan x="492" dy="16">]</tspan><tspan x="492" dy="16">1</tspan><tspan x="492" dy="16">}</tspan><tspan x="492" dy="16">1</tspan><tspan x="492" dy="16">0</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.2s" repeatCount="indefinite"/></text>
+<text x="535" y="-30" class="rain" fill="#58c4dd" opacity="0.17" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="535" dy="16">/</tspan><tspan x="535" dy="16">}</tspan><tspan x="535" dy="16">,</tspan><tspan x="535" dy="16">.</tspan><tspan x="535" dy="16">></tspan><tspan x="535" dy="16">%</tspan><tspan x="535" dy="16">*</tspan><tspan x="535" dy="16">=</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.9s" repeatCount="indefinite"/></text>
+<text x="578" y="-38" class="rain" fill="#58c4dd" opacity="0.13" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="578" dy="16">*</tspan><tspan x="578" dy="16">$</tspan><tspan x="578" dy="16">/</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">0</tspan><tspan x="578" dy="16">*</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.4s" repeatCount="indefinite"/></text></g>
+    <rect x="0" y="0" width="600" height="260" fill="url(#bg-58c4dd)" opacity="0.15"/>
+    <g transform="translate(150,-20)">
+    <g filter="url(#glow-58c4dd)" stroke="#58c4dd" fill="none" stroke-width="2.5">
+      <polygon points="150,50 202,80 202,140 150,170 98,140 98,80"/>
+      <polygon points="150,72 182,90 182,130 150,148 118,130 118,90" stroke-width="1.5" opacity="0.7"/>
+      <circle cx="150" cy="110" r="8" fill="#58c4dd" stroke="none"/>
+      <path d="M150 50 L150 30 M202 80 L222 68 M202 140 L222 152 M150 170 L150 190 M98 140 L78 152 M98 80 L78 68"
+            stroke-width="2"/>
+      <circle cx="150" cy="30" r="4"/><circle cx="222" cy="68" r="4"/>
+      <circle cx="222" cy="152" r="4"/><circle cx="150" cy="190" r="4"/>
+      <circle cx="78" cy="152" r="4"/><circle cx="78" cy="68" r="4"/>
+    </g>
+    </g>
+    <line x1="40" y1="215" x2="560" y2="215" stroke="#58c4dd" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="300" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace"
+          font-size="22" font-weight="700" fill="#58c4dd" filter="url(#glow-58c4dd)"
+          letter-spacing="4">REACT</text>
+    <text x="300" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace"
+          font-size="10" fill="#58c4dd" opacity="0.55" letter-spacing="2">// TECHNO_BLADE.SYS</text>
+  </g>
+</svg>
+</picture>
+                        <figcaption></figcaption>
+                    </figure>
+                    <div class="item-info">
+                        <h3>React</h3>
+                        <p class="explanation exp-views"><span class="material-icons">trending_up</span> Líder com 15.000 acessos mensais no escopo acadêmico.</p>
+                        <p class="explanation exp-date"><span class="material-icons">calendar_today</span> Lançado na data histórica de 29/05/2013.</p>
+                        <p class="explanation exp-alpha"><span class="material-icons">sort_by_alpha</span> Filtrado sob a letra R em nossa escala.</p>
+                        <a href="https://react.dev" target="_blank" rel="noopener" class="item-link"><span class="material-icons">launch</span> Documentação</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 3: Vue.js -->
+            <article class="ranking-item" data-title="VueJS" data-views="12000" data-date="2014-02-03">
+                <div class="item-topbar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span class="filename">App.vue</span>
+                    <span class="rank-tag"></span>
+                </div>
+                <div class="ranking-item-grid">
+                    <span class="rank-badge"></span>
+                    <figure class="item-media">
+                        <picture>
+<svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Emblema cyberpunk do Vue estilo Matrix">
+  <defs>
+    <linearGradient id="bg-3fb883" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05070c"/>
+      <stop offset="100%" stop-color="#0b0d13"/>
+    </linearGradient>
+    <filter id="glow-3fb883" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="clip-3fb883"><rect x="0" y="0" width="600" height="260" rx="10"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip-3fb883)">
+    <rect x="0" y="0" width="600" height="260" fill="url(#bg-3fb883)"/>
+    <rect x="0" y="0" width="600" height="260" fill="none" stroke="#3fb883" stroke-opacity="0.25" stroke-width="1"/>
+    <g opacity="0.9"><text x="21" y="-31" class="rain" fill="#3fb883" opacity="0.19" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="21" dy="16">.</tspan><tspan x="21" dy="16">0</tspan><tspan x="21" dy="16">></tspan><tspan x="21" dy="16">=</tspan><tspan x="21" dy="16">,</tspan><tspan x="21" dy="16">1</tspan><tspan x="21" dy="16">0</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.3s" repeatCount="indefinite"/></text>
+<text x="64" y="-2" class="rain" fill="#3fb883" opacity="0.2" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="64" dy="16">]</tspan><tspan x="64" dy="16">{</tspan><tspan x="64" dy="16"><</tspan><tspan x="64" dy="16">0</tspan><tspan x="64" dy="16">0</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.3s" repeatCount="indefinite"/></text>
+<text x="107" y="-24" class="rain" fill="#3fb883" opacity="0.09" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="107" dy="16">></tspan><tspan x="107" dy="16">1</tspan><tspan x="107" dy="16">0</tspan><tspan x="107" dy="16">0</tspan><tspan x="107" dy="16">[</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.4s" repeatCount="indefinite"/></text>
+<text x="149" y="-8" class="rain" fill="#3fb883" opacity="0.2" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="149" dy="16">0</tspan><tspan x="149" dy="16">0</tspan><tspan x="149" dy="16">.</tspan><tspan x="149" dy="16">}</tspan><tspan x="149" dy="16">></tspan><tspan x="149" dy="16">0</tspan><tspan x="149" dy="16">*</tspan><tspan x="149" dy="16">1</tspan><tspan x="149" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.6s" repeatCount="indefinite"/></text>
+<text x="192" y="-15" class="rain" fill="#3fb883" opacity="0.13" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="192" dy="16">%</tspan><tspan x="192" dy="16">0</tspan><tspan x="192" dy="16">]</tspan><tspan x="192" dy="16">1</tspan><tspan x="192" dy="16">=</tspan><tspan x="192" dy="16">-</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="3.6s" repeatCount="indefinite"/></text>
+<text x="235" y="-34" class="rain" fill="#3fb883" opacity="0.1" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="235" dy="16">1</tspan><tspan x="235" dy="16">1</tspan><tspan x="235" dy="16">\</tspan><tspan x="235" dy="16">0</tspan><tspan x="235" dy="16">:</tspan><tspan x="235" dy="16">1</tspan><tspan x="235" dy="16">:</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="3.9s" repeatCount="indefinite"/></text>
+<text x="278" y="-36" class="rain" fill="#3fb883" opacity="0.17" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="278" dy="16">0</tspan><tspan x="278" dy="16">0</tspan><tspan x="278" dy="16">.</tspan><tspan x="278" dy="16">,</tspan><tspan x="278" dy="16">:</tspan><tspan x="278" dy="16">0</tspan><tspan x="278" dy="16"><</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.4s" repeatCount="indefinite"/></text>
+<text x="321" y="10" class="rain" fill="#3fb883" opacity="0.1" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="321" dy="16">\</tspan><tspan x="321" dy="16">/</tspan><tspan x="321" dy="16">,</tspan><tspan x="321" dy="16">></tspan><tspan x="321" dy="16">$</tspan><tspan x="321" dy="16">\</tspan><tspan x="321" dy="16">1</tspan><tspan x="321" dy="16">1</tspan><tspan x="321" dy="16">}</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="3.6s" repeatCount="indefinite"/></text>
+<text x="364" y="-23" class="rain" fill="#3fb883" opacity="0.09" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="364" dy="16">:</tspan><tspan x="364" dy="16">></tspan><tspan x="364" dy="16">:</tspan><tspan x="364" dy="16">=</tspan><tspan x="364" dy="16">0</tspan><tspan x="364" dy="16">{</tspan><tspan x="364" dy="16">-</tspan><tspan x="364" dy="16">-</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.3s" repeatCount="indefinite"/></text>
+<text x="407" y="-23" class="rain" fill="#3fb883" opacity="0.12" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="407" dy="16">0</tspan><tspan x="407" dy="16">-</tspan><tspan x="407" dy="16">\</tspan><tspan x="407" dy="16">1</tspan><tspan x="407" dy="16">%</tspan><tspan x="407" dy="16">:</tspan><tspan x="407" dy="16">{</tspan><tspan x="407" dy="16">:</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="6.0s" repeatCount="indefinite"/></text>
+<text x="450" y="-28" class="rain" fill="#3fb883" opacity="0.2" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="450" dy="16">.</tspan><tspan x="450" dy="16">]</tspan><tspan x="450" dy="16">,</tspan><tspan x="450" dy="16">0</tspan><tspan x="450" dy="16">=</tspan><tspan x="450" dy="16">]</tspan><tspan x="450" dy="16">></tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="6.5s" repeatCount="indefinite"/></text>
+<text x="492" y="-5" class="rain" fill="#3fb883" opacity="0.17" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="492" dy="16"><</tspan><tspan x="492" dy="16">,</tspan><tspan x="492" dy="16">-</tspan><tspan x="492" dy="16">.</tspan><tspan x="492" dy="16">$</tspan><tspan x="492" dy="16">\</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.9s" repeatCount="indefinite"/></text>
+<text x="535" y="-19" class="rain" fill="#3fb883" opacity="0.08" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="535" dy="16">0</tspan><tspan x="535" dy="16">0</tspan><tspan x="535" dy="16">[</tspan><tspan x="535" dy="16">:</tspan><tspan x="535" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.4s" repeatCount="indefinite"/></text>
+<text x="578" y="-18" class="rain" fill="#3fb883" opacity="0.18" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="578" dy="16">[</tspan><tspan x="578" dy="16">.</tspan><tspan x="578" dy="16">;</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">\</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.2s" repeatCount="indefinite"/></text></g>
+    <rect x="0" y="0" width="600" height="260" fill="url(#bg-3fb883)" opacity="0.15"/>
+    <g transform="translate(150,-20)">
+    <g filter="url(#glow-3fb883)" stroke="#3fb883" fill="none" stroke-width="2.5">
+      <path d="M70 55 L150 185 L230 55 L196 55 L150 132 L104 55 Z"/>
+      <path d="M104 55 L150 95 L196 55 L172 55 L150 78 L128 55 Z" stroke-width="1.5" opacity="0.7"/>
+    </g>
+    <path d="M60 50 L60 60 M240 50 L240 60" stroke="#3fb883" stroke-width="2" opacity="0.5"/>
+    </g>
+    <line x1="40" y1="215" x2="560" y2="215" stroke="#3fb883" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="300" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace"
+          font-size="22" font-weight="700" fill="#3fb883" filter="url(#glow-3fb883)"
+          letter-spacing="4">VUE.JS</text>
+    <text x="300" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace"
+          font-size="10" fill="#3fb883" opacity="0.55" letter-spacing="2">// TECHNO_BLADE.SYS</text>
+  </g>
+</svg>
+</picture>
+                        <figcaption></figcaption>
+                    </figure>
+                    <div class="item-info">
+                        <h3>Vue.js</h3>
+                        <p class="explanation exp-views"><span class="material-icons">trending_up</span> Segundo colocado com 12.000 acessos estáveis.</p>
+                        <p class="explanation exp-date"><span class="material-icons">calendar_today</span> Criado em 03/02/2014 por Evan You.</p>
+                        <p class="explanation exp-alpha"><span class="material-icons">sort_by_alpha</span> Filtrado sob a letra V em nossa escala.</p>
+                        <a href="https://vuejs.org" target="_blank" rel="noopener" class="item-link"><span class="material-icons">launch</span> Documentação</a>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p><span class="prompt"/span><span class="prompt">Matheus Rossi</span> | UTFPR © 2026</p>
+    </footer>
+
+    <script>
+        // ---- Chuva de caracteres em preto no fundo ----
+        (() => {
+            const canvas = document.getElementById("matrix-rain");
+            const ctx = canvas.getContext("2d");
+            const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            const fontSize = 15;
+            const glyphs = "01{}[]()<>/\\;:.,+-*=!@#$%^&_~ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let columns = 0;
+            let drops = [];
+
+            function setup() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                columns = Math.floor(canvas.width / fontSize);
+                drops = new Array(columns).fill(0).map(() => Math.random() * -80);
+            }
+
+            function draw() {
+                // rastro: desbota suavemente sobre a cor de fundo do site
+                ctx.fillStyle = "rgba(11, 13, 19, 0.14)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                ctx.lineWidth = 0.7;
+
+                for (let i = 0; i < columns; i++) {
+                    const glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
+                    const x = i * fontSize;
+                    const y = drops[i] * fontSize;
+
+                    // contorno claro e fino só para dar contraste ao preto
+                    // sobre o fundo escuro (senão fica invisível)
+                    ctx.strokeStyle = "rgba(180, 188, 210, 0.4)";
+                    ctx.strokeText(glyph, x, y);
+
+                    ctx.fillStyle = "#000000"; // caractere em preto
+                    ctx.fillText(glyph, x, y);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            setup();
+            window.addEventListener("resize", setup);
+
+            if (!prefersReduced) {
+                setInterval(draw, 55);
+            } else {
+                // usuários com preferência por menos movimento veem só o fundo estático
+                ctx.fillStyle = "#0b0d13";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        })();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const select = document.getElementById("sort-criteria");
+            const container = document.getElementById("ranking-list");
+
+            function sortItems(criterion) {
+                const items = Array.from(container.querySelectorAll(".ranking-item"));
+
+                items.sort((a, b) => {
+                    if (criterion === "alpha") {
+                        return a.getAttribute("data-title").localeCompare(b.getAttribute("data-title"));
+                    }
+                    if (criterion === "views") {
+                        return parseInt(b.getAttribute("data-views")) - parseInt(a.getAttribute("data-views"));
+                    }
+                    if (criterion === "date") {
+                        return new Date(b.getAttribute("data-date")) - new Date(a.getAttribute("data-date"));
+                    }
+                });
+
+                items.forEach(item => container.appendChild(item));
+                document.body.setAttribute("data-sort", criterion);
+            }
+
+            select.addEventListener("change", (e) => sortItems(e.target.value));
+            sortItems(select.value);
+        });
+    </script>
+</body>
+</html>
