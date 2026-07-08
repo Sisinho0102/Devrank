@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevRank - Batalha dos Frameworks Front-End</title>
+    <link rel="icon" type="image/png" href="favicon-16.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,10 +105,10 @@
             background: var(--panel-alt);
             border-bottom: 1px solid var(--hairline);
         }
-        .console-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--hairline); }
-        .console-dot.d1 { background: #4a4f61; }
-        .console-dot.d2 { background: #4a4f61; }
-        .console-dot.d3 { background: #4a4f61; }
+        .console-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--hairline); box-shadow: 0 0 4px rgba(0,0,0,0.35) inset; }
+        .console-dot.d1 { background: #ff5f56; }
+        .console-dot.d2 { background: #ffbd2e; }
+        .console-dot.d3 { background: #27c93f; }
         .console-path {
             font-family: var(--font-mono);
             font-size: 0.72rem;
@@ -207,6 +208,9 @@
         }
         .item-topbar .dots { display: flex; gap: 0.4rem; }
         .item-topbar .dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--hairline); }
+        .item-topbar .dots span:nth-child(1) { background: #ff5f56; }
+        .item-topbar .dots span:nth-child(2) { background: #ffbd2e; }
+        .item-topbar .dots span:nth-child(3) { background: #27c93f; }
         .item-topbar .filename {
             font-family: var(--font-mono);
             font-size: 0.72rem;
@@ -357,10 +361,10 @@
                 <span class="console-dot d1"></span>
                 <span class="console-dot d2"></span>
                 <span class="console-dot d3"></span>
-                <span class="console-path">~/devrank/frameworks.log</span>
+                <span class="console-path"></span>
             </div>
             <div class="intro-body">
-                <h2>rank --frameworks front-end</h2>
+                <h2>rank frameworks front-end</h2>
                 <p>Seja bem-vindo ao ecossistema de frameworks que moldam a web moderna. Avalie os frameworks e utilize os filtros abaixo para reorganizar o ranking!</p>
 
                 <div class="controls-container">
@@ -380,7 +384,7 @@
             <article class="ranking-item" data-title="Angular" data-views="9000" data-date="2016-09-14">
                 <div class="item-topbar">
                     <div class="dots"><span></span><span></span><span></span></div>
-                    <span class="filename">angular.config.ts</span>
+                    <span class="filename"></span>
                     <span class="rank-tag"></span>
                 </div>
                 <div class="ranking-item-grid">
@@ -394,16 +398,22 @@
       <stop offset="100%" stop-color="#0b0d13"/>
     </linearGradient>
     <filter id="glow-e23554" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feGaussianBlur stdDeviation="5.5" result="blur"/>
       <feMerge>
+        <feMergeNode in="blur"/>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <radialGradient id="glowbg-e23554" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#e23554" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#e23554" stop-opacity="0"/>
+    </radialGradient>
     <clipPath id="clip-e23554"><rect x="0" y="0" width="600" height="260" rx="10"/></clipPath>
   </defs>
   <g clip-path="url(#clip-e23554)">
     <rect x="0" y="0" width="600" height="260" fill="url(#bg-e23554)"/>
+    <rect x="0" y="0" width="600" height="260" fill="url(#glowbg-e23554)"/>
     <rect x="0" y="0" width="600" height="260" fill="none" stroke="#e23554" stroke-opacity="0.25" stroke-width="1"/>
     <g opacity="0.9"><text x="21" y="-9" class="rain" fill="#e23554" opacity="0.12" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="21" dy="16">0</tspan><tspan x="21" dy="16">:</tspan><tspan x="21" dy="16"><</tspan><tspan x="21" dy="16">1</tspan><tspan x="21" dy="16">*</tspan><tspan x="21" dy="16">:</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.9s" repeatCount="indefinite"/></text>
 <text x="64" y="-1" class="rain" fill="#e23554" opacity="0.08" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="64" dy="16">\</tspan><tspan x="64" dy="16">.</tspan><tspan x="64" dy="16">0</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">></tspan><tspan x="64" dy="16">#</tspan><tspan x="64" dy="16"><</tspan><tspan x="64" dy="16">></tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.8s" repeatCount="indefinite"/></text>
@@ -420,12 +430,20 @@
 <text x="535" y="-21" class="rain" fill="#e23554" opacity="0.19" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="535" dy="16">+</tspan><tspan x="535" dy="16">}</tspan><tspan x="535" dy="16">1</tspan><tspan x="535" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="3.9s" repeatCount="indefinite"/></text>
 <text x="578" y="-3" class="rain" fill="#e23554" opacity="0.2" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="578" dy="16">}</tspan><tspan x="578" dy="16">[</tspan><tspan x="578" dy="16">0</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">0</tspan><tspan x="578" dy="16">[</tspan><tspan x="578" dy="16">\</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.0s" repeatCount="indefinite"/></text></g>
     <rect x="0" y="0" width="600" height="260" fill="url(#bg-e23554)" opacity="0.15"/>
-    <g transform="translate(150,-20)">
+    <g transform="translate(300,88) scale(1.32) translate(-150,-115)">
     <g filter="url(#glow-e23554)" stroke="#e23554" fill="none" stroke-width="2.5">
       <path d="M150 40 L215 62 L215 118 C215 155 185 178 150 190 C115 178 85 155 85 118 L85 62 Z"/>
       <path d="M150 78 L182 152 M150 78 L118 152 M128 132 L172 132" stroke-width="3"/>
     </g>
     <circle cx="150" cy="115" r="70" fill="none" stroke="#e23554" stroke-width="1" opacity="0.35"/>
+    <circle cx="150" cy="115" r="88" fill="none" stroke="#e23554" stroke-width="0.6" opacity="0.18"/>
+    </g>
+    <!-- cantos HUD tocando as bordas do quadro -->
+    <g stroke="#e23554" stroke-opacity="0.55" stroke-width="1.5" fill="none">
+      <path d="M12 12 L12 30 M12 12 L30 12"/>
+      <path d="M588 12 L588 30 M588 12 L570 12"/>
+      <path d="M12 248 L12 230 M12 248 L30 248"/>
+      <path d="M588 248 L588 230 M588 248 L570 248"/>
     </g>
     <line x1="40" y1="215" x2="560" y2="215" stroke="#e23554" stroke-opacity="0.4" stroke-width="1"/>
     <text x="300" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace"
@@ -452,7 +470,7 @@
             <article class="ranking-item" data-title="React" data-views="15000" data-date="2013-05-29">
                 <div class="item-topbar">
                     <div class="dots"><span></span><span></span><span></span></div>
-                    <span class="filename">App.jsx</span>
+                    <span class="filename"></span>
                     <span class="rank-tag"></span>
                 </div>
                 <div class="ranking-item-grid">
@@ -466,16 +484,22 @@
       <stop offset="100%" stop-color="#0b0d13"/>
     </linearGradient>
     <filter id="glow-58c4dd" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feGaussianBlur stdDeviation="5.5" result="blur"/>
       <feMerge>
+        <feMergeNode in="blur"/>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <radialGradient id="glowbg-58c4dd" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#58c4dd" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#58c4dd" stop-opacity="0"/>
+    </radialGradient>
     <clipPath id="clip-58c4dd"><rect x="0" y="0" width="600" height="260" rx="10"/></clipPath>
   </defs>
   <g clip-path="url(#clip-58c4dd)">
     <rect x="0" y="0" width="600" height="260" fill="url(#bg-58c4dd)"/>
+    <rect x="0" y="0" width="600" height="260" fill="url(#glowbg-58c4dd)"/>
     <rect x="0" y="0" width="600" height="260" fill="none" stroke="#58c4dd" stroke-opacity="0.25" stroke-width="1"/>
     <g opacity="0.9"><text x="21" y="-28" class="rain" fill="#58c4dd" opacity="0.11" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="21" dy="16">0</tspan><tspan x="21" dy="16">:</tspan><tspan x="21" dy="16">0</tspan><tspan x="21" dy="16">1</tspan><tspan x="21" dy="16">.</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.3s" repeatCount="indefinite"/></text>
 <text x="64" y="-27" class="rain" fill="#58c4dd" opacity="0.16" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">+</tspan><tspan x="64" dy="16">1</tspan><tspan x="64" dy="16">\</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.8s" repeatCount="indefinite"/></text>
@@ -492,7 +516,7 @@
 <text x="535" y="-30" class="rain" fill="#58c4dd" opacity="0.17" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="535" dy="16">/</tspan><tspan x="535" dy="16">}</tspan><tspan x="535" dy="16">,</tspan><tspan x="535" dy="16">.</tspan><tspan x="535" dy="16">></tspan><tspan x="535" dy="16">%</tspan><tspan x="535" dy="16">*</tspan><tspan x="535" dy="16">=</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.9s" repeatCount="indefinite"/></text>
 <text x="578" y="-38" class="rain" fill="#58c4dd" opacity="0.13" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="578" dy="16">*</tspan><tspan x="578" dy="16">$</tspan><tspan x="578" dy="16">/</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">0</tspan><tspan x="578" dy="16">*</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="5.4s" repeatCount="indefinite"/></text></g>
     <rect x="0" y="0" width="600" height="260" fill="url(#bg-58c4dd)" opacity="0.15"/>
-    <g transform="translate(150,-20)">
+    <g transform="translate(300,88) scale(1.32) translate(-150,-115)">
     <g filter="url(#glow-58c4dd)" stroke="#58c4dd" fill="none" stroke-width="2.5">
       <polygon points="150,50 202,80 202,140 150,170 98,140 98,80"/>
       <polygon points="150,72 182,90 182,130 150,148 118,130 118,90" stroke-width="1.5" opacity="0.7"/>
@@ -503,6 +527,13 @@
       <circle cx="222" cy="152" r="4"/><circle cx="150" cy="190" r="4"/>
       <circle cx="78" cy="152" r="4"/><circle cx="78" cy="68" r="4"/>
     </g>
+    </g>
+    <!-- cantos HUD tocando as bordas do quadro -->
+    <g stroke="#58c4dd" stroke-opacity="0.55" stroke-width="1.5" fill="none">
+      <path d="M12 12 L12 30 M12 12 L30 12"/>
+      <path d="M588 12 L588 30 M588 12 L570 12"/>
+      <path d="M12 248 L12 230 M12 248 L30 248"/>
+      <path d="M588 248 L588 230 M588 248 L570 248"/>
     </g>
     <line x1="40" y1="215" x2="560" y2="215" stroke="#58c4dd" stroke-opacity="0.4" stroke-width="1"/>
     <text x="300" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace"
@@ -529,7 +560,7 @@
             <article class="ranking-item" data-title="VueJS" data-views="12000" data-date="2014-02-03">
                 <div class="item-topbar">
                     <div class="dots"><span></span><span></span><span></span></div>
-                    <span class="filename">App.vue</span>
+                    <span class="filename"></span>
                     <span class="rank-tag"></span>
                 </div>
                 <div class="ranking-item-grid">
@@ -543,16 +574,22 @@
       <stop offset="100%" stop-color="#0b0d13"/>
     </linearGradient>
     <filter id="glow-3fb883" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feGaussianBlur stdDeviation="5.5" result="blur"/>
       <feMerge>
+        <feMergeNode in="blur"/>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <radialGradient id="glowbg-3fb883" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#3fb883" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#3fb883" stop-opacity="0"/>
+    </radialGradient>
     <clipPath id="clip-3fb883"><rect x="0" y="0" width="600" height="260" rx="10"/></clipPath>
   </defs>
   <g clip-path="url(#clip-3fb883)">
     <rect x="0" y="0" width="600" height="260" fill="url(#bg-3fb883)"/>
+    <rect x="0" y="0" width="600" height="260" fill="url(#glowbg-3fb883)"/>
     <rect x="0" y="0" width="600" height="260" fill="none" stroke="#3fb883" stroke-opacity="0.25" stroke-width="1"/>
     <g opacity="0.9"><text x="21" y="-31" class="rain" fill="#3fb883" opacity="0.19" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="21" dy="16">.</tspan><tspan x="21" dy="16">0</tspan><tspan x="21" dy="16">></tspan><tspan x="21" dy="16">=</tspan><tspan x="21" dy="16">,</tspan><tspan x="21" dy="16">1</tspan><tspan x="21" dy="16">0</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.3s" repeatCount="indefinite"/></text>
 <text x="64" y="-2" class="rain" fill="#3fb883" opacity="0.2" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="64" dy="16">]</tspan><tspan x="64" dy="16">{</tspan><tspan x="64" dy="16"><</tspan><tspan x="64" dy="16">0</tspan><tspan x="64" dy="16">0</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.3s" repeatCount="indefinite"/></text>
@@ -569,12 +606,19 @@
 <text x="535" y="-19" class="rain" fill="#3fb883" opacity="0.08" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="535" dy="16">0</tspan><tspan x="535" dy="16">0</tspan><tspan x="535" dy="16">[</tspan><tspan x="535" dy="16">:</tspan><tspan x="535" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="7.4s" repeatCount="indefinite"/></text>
 <text x="578" y="-18" class="rain" fill="#3fb883" opacity="0.18" font-size="13" font-family="JetBrains Mono, monospace" text-anchor="middle"><tspan x="578" dy="16">[</tspan><tspan x="578" dy="16">.</tspan><tspan x="578" dy="16">;</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">\</tspan><tspan x="578" dy="16">1</tspan><tspan x="578" dy="16">1</tspan><animateTransform attributeName="transform" type="translate" from="0 0" to="0 26" dur="4.2s" repeatCount="indefinite"/></text></g>
     <rect x="0" y="0" width="600" height="260" fill="url(#bg-3fb883)" opacity="0.15"/>
-    <g transform="translate(150,-20)">
+    <g transform="translate(300,88) scale(1.32) translate(-150,-115)">
     <g filter="url(#glow-3fb883)" stroke="#3fb883" fill="none" stroke-width="2.5">
       <path d="M70 55 L150 185 L230 55 L196 55 L150 132 L104 55 Z"/>
       <path d="M104 55 L150 95 L196 55 L172 55 L150 78 L128 55 Z" stroke-width="1.5" opacity="0.7"/>
     </g>
     <path d="M60 50 L60 60 M240 50 L240 60" stroke="#3fb883" stroke-width="2" opacity="0.5"/>
+    </g>
+    <!-- cantos HUD tocando as bordas do quadro -->
+    <g stroke="#3fb883" stroke-opacity="0.55" stroke-width="1.5" fill="none">
+      <path d="M12 12 L12 30 M12 12 L30 12"/>
+      <path d="M588 12 L588 30 M588 12 L570 12"/>
+      <path d="M12 248 L12 230 M12 248 L30 248"/>
+      <path d="M588 248 L588 230 M588 248 L570 248"/>
     </g>
     <line x1="40" y1="215" x2="560" y2="215" stroke="#3fb883" stroke-opacity="0.4" stroke-width="1"/>
     <text x="300" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace"
