@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevRank - Batalha dos Frameworks Front-End</title>
+    <link rel="icon" type="image/png" href="favicon-16.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght=400;500;700;800&family=Inter:wght=400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-sort="views">
+
+    <canvas id="matrix-rain" aria-hidden="true"></canvas>
+
+    <header class="site-header">
+        <div class="header-container">
+            <svg class="site-logo" width="42" height="42" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="#ffb454" stroke-width="6"/>
+                <polyline points="25,40 50,20 75,40" fill="none" stroke="#ffb454" stroke-width="6"/>
+                <polyline points="25,60 50,80 75,60" fill="none" stroke="#ffb454" stroke-width="6"/>
+            </svg>
+            <h1 class="site-title">DevRank<span class="subtitle">Batalha dos Frameworks</span></h1>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="intro-section">
+            <div class="console-bar">
+                <span class="console-dot d1"></span>
+                <span class="console-dot d2"></span>
+                <span class="console-dot d3"></span>
+                <span class="console-path"></span>
+            </div>
+            <div class="intro-body">
+                <h2>rank frameworks front-end</h2>
+                <p>Seja bem-vindo ao ecossistema de frameworks que moldam a web moderna. Avalie os frameworks e utilize os filtros abaixo para reorganizar o ranking!</p>
+
+                <div class="controls-container">
+                    <label for="sort-criteria"><span class="material-icons">sort</span> Ordenar ranking por:</label>
+                    <select id="sort-criteria" class="sort-dropdown">
+                        <option value="views" selected>Popularidade (Acessos Mensais)</option>
+                        <option value="date">Data de Lançamento</option>
+                        <option value="alpha">Ordem Alfabética (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section id="ranking-list" class="ranking-container">
+
+            <!-- Item 1: Angular -->
+            <article class="ranking-item" data-title="Angular" data-views="9000" data-date="2016-09-14">
+                <div class="item-topbar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span class="filename">angular.config.json</span>
+                    <span class="rank-tag"></span>
+                </div>
+                <div class="ranking-item-grid">
+                    <span class="rank-badge"></span>
+                    <figure class="item-media">
+                        <picture>
+                            <source media="(max-width: 600px)" srcset="angular-card.png">
+                            <img src="angular-card.png" alt="Captura de tela da página oficial do Angular dev.">
+                        </picture>
+                        <figcaption>Interface do portal de documentação do Angular.</figcaption>
+                    </figure>
+                    <div class="item-info">
+                        <h3>Angular</h3>
+                        <p class="explanation exp-views"><span class="material-icons">trending_up</span> Retém robustos 9.000 acessos corporativos no ecossistema.</p>
+                        <p class="explanation exp-date"><span class="material-icons">calendar_today</span> Remodelado completamente em 14/09/2016.</p>
+                        <p class="explanation exp-alpha"><span class="material-icons">sort_by_alpha</span> Conquistou o topo da lista na letra A.</p>
+                        <a href="https://angular.dev" target="_blank" rel="noopener" class="item-link"><span class="material-icons">launch</span> Documentação</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 2: React -->
+            <article class="ranking-item" data-title="React" data-views="15000" data-date="2013-05-29">
+                <div class="item-topbar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span class="filename">react.effects.js</span>
+                    <span class="rank-tag"></span>
+                </div>
+                <div class="ranking-item-grid">
+                    <span class="rank-badge"></span>
+                    <figure class="item-media">
+                        <picture>
+                           <source media="(max-width: 600px)" srcset="react-card.png">
+                            <img src="react-card.png" alt="Card do React">
+                        </picture>
+                        <figcaption>Página inicial do novo portal de aprendizado do React.</figcaption>
+                    </figure>
+                    <div class="item-info">
+                        <h3>React</h3>
+                        <p class="explanation exp-views"><span class="material-icons">trending_up</span> Líder absoluto com 15.000 acessos mensais no escopo atual.</p>
+                        <p class="explanation exp-date"><span class="material-icons">calendar_today</span> Lançado na data histórica de 29/05/2013.</p>
+                        <p class="explanation exp-alpha"><span class="material-icons">sort_by_alpha</span> Filtrado sob a letra R em nossa escala.</p>
+                        <a href="https://react.dev" target="_blank" rel="noopener" class="item-link"><span class="material-icons">launch</span> Documentação</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 3: SolidJS -->
+            <article class="ranking-item" data-title="SolidJS" data-views="4500" data-date="2021-06-01">
+                <div class="item-topbar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span class="filename">solid.reactive.ts</span>
+                    <span class="rank-tag"></span>
+                </div>
+                <div class="ranking-item-grid">
+                    <span class="rank-badge"></span>
+                    <figure class="item-media">
+                        <picture>
+                            <source media="(max-width: 600px)" srcset="solidjs-card.png">
+                            <img src="solidjs-card.png" alt="Captura de tela da documentação do SolidJS.">
+                        </picture>
+                        <figcaption>Página principal exibindo a reatividade primitiva do SolidJS.</figcaption>
+                    </figure>
+                    <div class="item-info">
+                        <h3>SolidJS</h3>
+                        <p class="explanation exp-views"><span class="material-icons">trending_up</span> Desponta na comunidade com 4.500 acessos em ascensão.</p>
+                        <p class="explanation exp-date"><span class="material-icons">calendar_today</span> Uma adição moderna lançada oficialmente em 01/06/2021.</p>
+                        <p class="explanation exp-alpha"><span class="material-icons">sort_by_alpha</span> Classificado sob a letra S (Solid) no índice alfabético.</p>
+                        <a href="https://www.solidjs.com" target="_blank" rel="noopener" class="item-link"><span class="material-icons">launch</span> Documentação</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 4: Svelte -->
+            <article class="ranking-item" data-title="Svelte" data-views="7500" data-date="2016-11-26">
+                <div class="item-topbar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span class="filename">svelte.compile.js</span>
+                    <span class="rank-tag"></span>
+                </div>
+                <div class="ranking-item-grid">
+                    <span class="rank-badge"></span>
+                    <figure class="item-media">
+                        <picture>
+                            <source media="(max-width: 600px)" srcset="svelte-card.png">
+                            <img src="svelte-card.png" alt="Captura de tela do site oficial do Svelte.">
+                        </picture>
+                        <figcaption>Interface de exemplos interativos (REPL) do ecossistema Svelte.</figcaption>
+                    </figure>
+                    <div class="item-info">
+                        <h3>Svelte</h3>
+                        <p class="explanation exp-views"><span class="material-icons">trending_up</span> Cresce de forma consistente registrando 7.500 acessos estáveis.</p>
+                        <p class="explanation exp-date"><span class="material-icons">calendar_today</span> Lançado em sua primeira versão conceitual em 26/11/2016.</p>
+                        <p class="explanation exp-alpha"><span class="material-icons">sort_by_alpha</span> Organizado sob a letra S em nossa listagem sequencial.</p>
+                        <a href="https://svelte.dev" target="_blank" rel="noopener" class="item-link"><span class="material-icons">launch</span> Documentação</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Item 5: VueJS -->
+            <article class="ranking-item" data-title="VueJS" data-views="12000" data-date="2014-02-03">
+                <div class="item-topbar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span class="filename">vue.reactive.js</span>
+                    <span class="rank-tag"></span>
+                </div>
+                <div class="ranking-item-grid">
+                    <span class="rank-badge"></span>
+                    <figure class="item-media">
+                        <picture>
+                            <source media="(max-width: 600px)" srcset="vue-card.png">
+                            <img src="vue-card.png" alt="Captura de tela do site oficial do Vue.js.">
+                        </picture>
+                        <figcaption>Documentação progressiva do framework Vue.</figcaption>
+                    </figure>
+                    <div class="item-info">
+                        <h3>Vue.js</h3>
+                        <p class="explanation exp-views"><span class="material-icons">trending_up</span> Vice-líder consolidado com excelentes 12.000 acessos mensais.</p>
+                        <p class="explanation exp-date"><span class="material-icons">calendar_today</span> Criado e disponibilizado publicamente em 03/02/2014.</p>
+                        <p class="explanation exp-alpha"><span class="material-icons">sort_by_alpha</span> Filtrado sob a letra V em nossa escala final.</p>
+                        <a href="https://vuejs.org" target="_blank" rel="noopener" class="item-link"><span class="material-icons">launch</span> Documentação</a>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p><span class="prompt">Matheus Rossi</span> | UTFPR © 2026</p>
+    </footer>
+
+    <script>
+        (() => {
+            const canvas = document.getElementById("matrix-rain");
+            const ctx = canvas.getContext("2d");
+            const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            const fontSize = 15;
+            const glyphs = "01{}[]()<>/\\;:.,+-*=!@#$%^&_~ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let columns = 0;
+            let drops = [];
+
+            function setup() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                columns = Math.floor(canvas.width / fontSize);
+                drops = new Array(columns).fill(0).map(() => Math.random() * -80);
+            }
+
+            function draw() {
+                ctx.fillStyle = "rgba(11, 13, 19, 0.14)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                ctx.lineWidth = 0.7;
+
+                for (let i = 0; i < columns; i++) {
+                    const glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
+                    const x = i * fontSize;
+                    const y = drops[i] * fontSize;
+
+                    ctx.strokeStyle = "rgba(180, 188, 210, 0.4)";
+                    ctx.strokeText(glyph, x, y);
+
+                    ctx.fillStyle = "#000000";
+                    ctx.fillText(glyph, x, y);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            setup();
+            window.addEventListener("resize", setup);
+
+            if (!prefersReduced) {
+                setInterval(draw, 55);
+            } else {
+                ctx.fillStyle = "#0b0d13";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        })();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const select = document.getElementById("sort-criteria");
+            const container = document.getElementById("ranking-list");
+
+            function sortItems(criterion) {
+                const items = Array.from(container.querySelectorAll(".ranking-item"));
+
+                items.sort((a, b) => {
+                    if (criterion === "alpha") {
+                        return a.getAttribute("data-title").localeCompare(b.getAttribute("data-title"));
+                    }
+                    if (criterion === "views") {
+                        return parseInt(b.getAttribute("data-views")) - parseInt(a.getAttribute("data-views"));
+                    }
+                    if (criterion === "date") {
+                        return new Date(b.getAttribute("data-date")) - new Date(a.getAttribute("data-date"));
+                    }
+                });
+
+                items.forEach(item => container.appendChild(item));
+                document.body.setAttribute("data-sort", criterion);
+            }
+
+            select.addEventListener("change", (e) => sortItems(e.target.value));
+            sortItems(select.value);
+        });
+    </script>
+</body>
+</html>
